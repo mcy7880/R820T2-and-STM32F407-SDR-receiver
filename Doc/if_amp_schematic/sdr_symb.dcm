@@ -1,0 +1,23 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP +3.3V
+D power-flag symbol
+K Power Flag Symbol
+$ENDCMP
+#
+$CMP +3V
+D power-flag symbol +3.3V
+K Power Flag Symbol
+$ENDCMP
+#
+$CMP L_Core_pol
+D Inductor with ferrite core, small symbol
+K inductor choke coil reactor magnetic
+$ENDCMP
+#
+$CMP Transf_1P_2S
+D Transformer, single primary, dual secondary
+K transformer coil magnet
+$ENDCMP
+#
+#End Doc Library

@@ -1,0 +1,13 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP L_Core_pol
+D Inductor with ferrite core, small symbol
+K inductor choke coil reactor magnetic
+$ENDCMP
+#
+$CMP Transf_1P_2S
+D Transformer, single primary, dual secondary
+K transformer coil magnet
+$ENDCMP
+#
+#End Doc Library
