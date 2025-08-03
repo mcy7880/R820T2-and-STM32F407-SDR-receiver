@@ -1,0 +1,263 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:schematic-cache
+LIBS:up_converter-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "The up converter"
+Date "2025-07-31"
+Rev "v1.0"
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Conn_Coaxial J3
+U 1 1 688BC255
+P 7550 3150
+F 0 "J3" H 7560 3270 50  0000 C CNN
+F 1 "Conn_Coaxial" V 7665 3150 50  0001 C CNN
+F 2 "" H 7550 3150 50  0001 C CNN
+F 3 "" H 7550 3150 50  0001 C CNN
+	1    7550 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_Coaxial J2
+U 1 1 688BC284
+P 5800 3150
+F 0 "J2" H 5810 3270 50  0000 C CNN
+F 1 "Conn_Coaxial" V 5915 3150 50  0001 C CNN
+F 2 "" H 5800 3150 50  0001 C CNN
+F 3 "" H 5800 3150 50  0001 C CNN
+	1    5800 3150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L HC1-TSE U1
+U 1 1 688B7F79
+P 4850 4250
+F 0 "U1" H 4950 4550 60  0000 C CNN
+F 1 "HC1-TSE" H 5100 3975 60  0000 C CNN
+F 2 "" H 4800 4400 60  0001 C CNN
+F 3 "" H 4800 4400 60  0001 C CNN
+	1    4850 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L SAM-3H-3 U2
+U 1 1 688B856F
+P 6650 3225
+F 0 "U2" H 6250 3650 60  0000 C CNN
+F 1 "SAM-3H-3" H 6450 3550 60  0000 C CNN
+F 2 "" H 6625 3975 60  0001 C CNN
+F 3 "" H 6625 3975 60  0001 C CNN
+	1    6650 3225
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7275 3100 7300 3100
+Wire Wire Line
+	7300 3100 7300 3225
+Wire Wire Line
+	7300 3225 7275 3225
+Wire Wire Line
+	7400 3150 7300 3150
+Connection ~ 7300 3150
+Wire Wire Line
+	5950 3150 6075 3150
+$Comp
+L GND #PWR5
+U 1 1 688B86A6
+P 7550 3375
+F 0 "#PWR5" H 7550 3125 50  0001 C CNN
+F 1 "GND" H 7550 3225 50  0000 C CNN
+F 2 "" H 7550 3375 50  0001 C CNN
+F 3 "" H 7550 3375 50  0001 C CNN
+	1    7550 3375
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR3
+U 1 1 688B86E2
+P 5800 3375
+F 0 "#PWR3" H 5800 3125 50  0001 C CNN
+F 1 "GND" H 5800 3225 50  0000 C CNN
+F 2 "" H 5800 3375 50  0001 C CNN
+F 3 "" H 5800 3375 50  0001 C CNN
+	1    5800 3375
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR4
+U 1 1 688B86F9
+P 6425 3700
+F 0 "#PWR4" H 6425 3450 50  0001 C CNN
+F 1 "GND" H 6425 3550 50  0000 C CNN
+F 2 "" H 6425 3700 50  0001 C CNN
+F 3 "" H 6425 3700 50  0001 C CNN
+	1    6425 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6275 3650 6275 3675
+Wire Wire Line
+	6275 3675 6575 3675
+Wire Wire Line
+	6575 3675 6575 3650
+Wire Wire Line
+	6475 3650 6475 3675
+Connection ~ 6475 3675
+Wire Wire Line
+	6375 3650 6375 3675
+Connection ~ 6375 3675
+Wire Wire Line
+	6425 3700 6425 3675
+Connection ~ 6425 3675
+$Comp
+L GND #PWR1
+U 1 1 688B877F
+P 4850 4625
+F 0 "#PWR1" H 4850 4375 50  0001 C CNN
+F 1 "GND" H 4850 4475 50  0000 C CNN
+F 2 "" H 4850 4625 50  0001 C CNN
+F 3 "" H 4850 4625 50  0001 C CNN
+	1    4850 4625
+	1    0    0    -1  
+$EndComp
+$Comp
+L L_Core_pol L1
+U 1 1 688B87F9
+P 4850 3350
+F 0 "L1" H 4900 3375 50  0000 L CNN
+F 1 "220u" H 4900 3300 50  0000 L CNN
+F 2 "" H 4850 3357 50  0001 C CNN
+F 3 "" H 4850 3357 50  0001 C CNN
+	1    4850 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C1
+U 1 1 688B88B6
+P 5000 3675
+F 0 "C1" V 5100 3625 50  0000 L CNN
+F 1 "100n" V 4875 3575 50  0000 L CNN
+F 2 "" H 5000 3675 50  0001 C CNN
+F 3 "" H 5000 3675 50  0001 C CNN
+	1    5000 3675
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR2
+U 1 1 688B89C5
+P 5150 3675
+F 0 "#PWR2" H 5150 3425 50  0001 C CNN
+F 1 "GND" V 5150 3475 50  0000 C CNN
+F 2 "" H 5150 3675 50  0001 C CNN
+F 3 "" H 5150 3675 50  0001 C CNN
+	1    5150 3675
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Conn_01x01 J1
+U 1 1 688B8AB7
+P 4850 3025
+F 0 "J1" V 4950 3025 50  0000 C CNN
+F 1 "Conn_01x01" H 4850 2925 50  0001 C CNN
+F 2 "" H 4850 3025 50  0001 C CNN
+F 3 "" H 4850 3025 50  0001 C CNN
+	1    4850 3025
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R_Small R1
+U 1 1 688B8D49
+P 5425 4250
+F 0 "R1" V 5500 4225 50  0000 L CNN
+F 1 "82" V 5350 4225 50  0000 L CNN
+F 2 "" H 5425 4250 50  0001 C CNN
+F 3 "" H 5425 4250 50  0001 C CNN
+	1    5425 4250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L C_Small C2
+U 1 1 688B8E32
+P 5725 4250
+F 0 "C2" V 5825 4200 50  0000 L CNN
+F 1 "10n" V 5600 4175 50  0000 L CNN
+F 2 "" H 5725 4250 50  0001 C CNN
+F 3 "" H 5725 4250 50  0001 C CNN
+	1    5725 4250
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5150 3675 5100 3675
+Wire Wire Line
+	4900 3675 4850 3675
+Wire Wire Line
+	4850 3450 4850 3875
+Connection ~ 4850 3675
+Wire Wire Line
+	4850 3225 4850 3275
+Wire Wire Line
+	4850 4600 4850 4625
+Wire Wire Line
+	5200 4250 5325 4250
+Wire Wire Line
+	5525 4250 5625 4250
+Wire Wire Line
+	5825 4250 6825 4250
+Wire Wire Line
+	6825 4250 6825 3650
+Wire Wire Line
+	5800 3350 5800 3375
+Wire Wire Line
+	7550 3350 7550 3375
+Text Notes 4550 3075 0    60   ~ 0
++5V
+Text Notes 5425 4050 0    60   ~ 0
+roughly +10 dBm for LO
+Text Notes 4900 4650 0    60   ~ 0
+50.0000 MHz
+Text Notes 7450 2975 0    60   ~ 0
+male
+Text Notes 5650 2975 0    60   ~ 0
+female
+$EndSCHEMATC
