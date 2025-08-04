@@ -8,6 +8,9 @@ Porting, modification, improvements and SDR code was done by @mcy7880 Maciej Faj
 # Doc
 Documentation, hardware schematics and block diagram.
 
+# Matlab
+Matlab's script and *.FDA files for Filter Designer (fdatool).
+
 # stm32f407_r820t2
 STM32F407 - the whole project from STM32IDE
 
