@@ -1,4 +1,9 @@
 /* USER CODE BEGIN Header */
+/*
+ * STM32F030 driver for R820T2
+ * E. Brombaugh 02-12-2017
+ * 02-08-2025 Maciej Fajfer - porting to STM32F407, modifications, improvements and Software Defined Radio code
+ */
 /**
   ******************************************************************************
   * @file           : main.c

@@ -1,6 +1,7 @@
 /*
  * cmd.c - Command parsing routines for STM32F303 breakout SPI to ice5 FPGA
  * 05-11-16 E. Brombaugh
+ * 02-08-2025 Maciej Fajfer - porting to STM32F407, modifications, improvements and Software Defined Radio code
  */
 #include <string.h>
 #include <stdlib.h>
