@@ -413,7 +413,7 @@ void cmd_proc(void)
 								break;
 							}
 
-							UART_printf(" ; Mod: %.2f\r\n -> n/p - next/prev step ; s - stop\r\n", calculate_mean_module());
+							UART_printf(" ; Mod: %.2f -> n/p - next/prev step ; s - stop\r\n", calculate_mean_module());
 
 							while ( ((rxchar_loc = usart_getc()) == EOF) || ((rxchar_loc != 'n') && (rxchar_loc != 'p') && (rxchar_loc != 's')) );
 							usart_flush_RX_buffer();

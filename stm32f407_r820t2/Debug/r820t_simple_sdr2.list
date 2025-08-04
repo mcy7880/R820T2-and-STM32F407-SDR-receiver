@@ -29,11 +29,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  00020250  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00025d4d  00000000  00000000  00020280  2**0
+ 13 .debug_info   00025d4e  00000000  00000000  00020280  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 0000477f  00000000  00000000  00045fcd  2**0
+ 14 .debug_abbrev 0000477f  00000000  00000000  00045fce  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_loc    0001ded2  00000000  00000000  0004a74c  2**0
+ 15 .debug_loc    0001ded2  00000000  00000000  0004a74d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_aranges 00001058  00000000  00000000  00068620  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -3418,7 +3418,7 @@ void cmd_proc(void)
  8001fa2:	ee00 0a10 	vmov	s0, r0
  8001fa6:	f00b f8fb 	bl	800d1a0 <log10f>
  8001faa:	eef3 7a04 	vmov.f32	s15, #52	; 0x41a00000  20.0
-							UART_printf(" ; Mod: %.2f\r\n -> n/p - next/prev step ; s - stop\r\n", calculate_mean_module());
+							UART_printf(" ; Mod: %.2f -> n/p - next/prev step ; s - stop\r\n", calculate_mean_module());
  8001fae:	ee60 7a27 	vmul.f32	s15, s0, s15
  8001fb2:	ee17 0a90 	vmov	r0, s15
  8001fb6:	f7fe fad7 	bl	8000568 <__aeabi_f2d>
