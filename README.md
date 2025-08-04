@@ -10,3 +10,5 @@ Documentation, hardware schematics and block diagram.
 
 # stm32f407_r820t2
 STM32F407 - the whole project from STM32IDE
+
+Lots of detials (in Polish): https://www.elektroda.pl/rtvforum/topic4133002.html
