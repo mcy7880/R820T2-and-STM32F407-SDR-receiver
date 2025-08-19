@@ -58,7 +58,7 @@ const float A_DAC_scale_IQ = (4095.0/2.0)/0.6;
 const float B_DAC_scale_IQ = 4095.0/2.0;
 
 //DAC scaling coefficients for AM
-const float A_DAC_scale_AM = 6200.0;
+const float A_DAC_scale_AM = 6400.0;
 const float B_DAC_scale_AM = 2048.0;
 
 //DAC scaling coefficients for FM
@@ -85,14 +85,21 @@ float a[5];
 //IIR filters delay registers for I and Q filters
 float Z_I[5];
 float Z_Q[5];
-float Z_audio[4];
 
+//It was hard to implement single section filter (with float computing instead of double) so it's two sections filter.
+//first AM audio filter section
+//Numerator filter coefficients - fc=100 kHz - low pass filter
+const float b_AM_HPF[] = {9.99254524707794189453125000000000e-01, -9.99254524707794189453125000000000e-01};
+//Denominator filter coefficients - fc=100 kHz - low pass filter
+const float a_AM_HPF = -9.98509109020233154296875000000000e-01;
 
-//Numerator filter coefficients for AM audio filter 200...4.5 kHz - after decimation
-const float b_AM[] = {2.92117078788578510284423828125000e-03, 0.00000000000000000000000000000000e+00, -5.84234157577157020568847656250000e-03, 0.00000000000000000000000000000000e+00, 2.92117078788578510284423828125000e-03};
+//second AM audio filter section
+//Numerator filter coefficients - fc=4.5 kHz - after decimation - low pass filter
+const float b_AM_LPF[] = {3.19081917405128479003906250000000e-03, 6.38163834810256958007812500000000e-03, 3.19081917405128479003906250000000e-03};
 
-//Denominator filter coefficientsfor AM audio filter 200...4.5 kHz - after decimation
-const float a_AM[] = {-3.87497282028198242187500000000000e+00, 5.64039278030395507812500000000000e+00, -3.65578103065490722656250000000000e+00, 8.90361666679382324218750000000000e-01};
+//Denominator filter coefficients- fc=4.5 kHz - after decimation - low pass filter
+const float a_AM_LPF[] = {-1.87040913105010986328125000000000e+00, 8.85578274726867675781250000000000e-01};
+
 
 
 //Numerator filter coefficients for FM audio filter fc=10 kHz - after decimation
@@ -109,8 +116,8 @@ float b_CW[] = {4.93644665766623802483081817626953e-06, 9.8728933153324760496616
 const float a_CW[] = {-1.99434518814086914062500000000000e+00, 9.94365453720092773437500000000000e-01};
 
 
-//IIR filters delay registers for audio filters AM, FM and CW
-float Z1_audio, Z2_audio, Z3_audio, Z4_audio;
+//IIR filters delay registers for audio filters AM (HPF and LPF), FM and CW
+float Z1_audio, Z2_audio, Z_audio;
 
 //current and previous I and Q values
 float I, Q, I_Z1, I_Z2, Q_Z1, Q_Z2;
@@ -419,22 +426,20 @@ void HAL_ADC_ConvHalfCpltCallback (ADC_HandleTypeDef * hadc)
 				module_max_tmp = -1.0;
 			}
 
-			//audio band pass filter for AM
-			tmp = module;
-			module = 0;
-			for (k = 0;k<4;k++)
-			{
-				tmp -= Z_audio[k]*a_AM[k];
-				module += Z_audio[k]*b_AM[k+1];
-			}
-			module += tmp*b_AM[0];
-			Z_audio[3] = Z_audio[2];
-			Z_audio[2] = Z_audio[1];
-			Z_audio[1] = Z_audio[0];
-			Z_audio[0] = tmp;
+			//first AM audio filter section
+			tmp = module - Z_audio*a_AM_HPF;
+			module = tmp*b_AM_HPF[0] + Z_audio*b_AM_HPF[1];
+			Z_audio = tmp;
+
+			//second AM audio filter section
+			tmp = module - (Z1_audio*a_AM_LPF[0] + Z2_audio*a_AM_LPF[1]);
+			module = tmp*b_AM_LPF[0] + Z1_audio*b_AM_LPF[1] + Z2_audio*b_AM_LPF[2];
+			Z2_audio = Z1_audio;
+			Z1_audio = tmp;
+
 
 			DAC_value = A_DAC_scale_AM*module*AM_AGC_sig + B_DAC_scale_AM;
-			if (DAC_value > 4095) DAC_value = 4095;
+			//if (DAC_value > 4095) DAC_value = 4095; //it would be better with this limiter but it's not enough time to do that
 			if (DAC_value < 0) DAC_value = 0;
 			DAC->DHR12R1 = DAC_value;
 		break;
@@ -549,34 +554,34 @@ void HAL_ADC_ConvCpltCallback (ADC_HandleTypeDef * hadc)
 		break;
 
 	case DEMOD_AM:
-			module = sqrtf(I*I + Q*Q);
+		module = sqrtf(I*I + Q*Q);
 
-			if (module > module_max_tmp) module_max_tmp = module;
-			AM_mod_max_cnt++;
-			if (AM_mod_max_cnt == AM_max_cnt_sample)
-			{
-				AM_mod_max_cnt = 0;
-				AM_AGC_sig = AM_AGC_coeff / module_max_tmp;
-				module_max_tmp = -1.0;
-			}
+		//digital AGC - more likely automatic scaling
+		if (module > module_max_tmp) module_max_tmp = module;
+		AM_mod_max_cnt++;
+		if (AM_mod_max_cnt == AM_max_cnt_sample)
+		{
+			AM_mod_max_cnt = 0;
+			AM_AGC_sig = AM_AGC_coeff / module_max_tmp;
+			module_max_tmp = -1.0;
+		}
 
-			tmp = module;
-			module = 0;
-			for (k = 0;k<4;k++)
-			{
-				tmp -= Z_audio[k]*a_AM[k];
-				module += Z_audio[k]*b_AM[k+1];
-			}
-			module += tmp*b_AM[0];
-			Z_audio[3] = Z_audio[2];
-			Z_audio[2] = Z_audio[1];
-			Z_audio[1] = Z_audio[0];
-			Z_audio[0] = tmp;
+		//first AM audio filter section
+		tmp = module - Z_audio*a_AM_HPF;
+		module = tmp*b_AM_HPF[0] + Z_audio*b_AM_HPF[1];
+		Z_audio = tmp;
 
-			DAC_value = A_DAC_scale_AM*module*AM_AGC_sig + B_DAC_scale_AM;
-			if (DAC_value > 4095) DAC_value = 4095;
-			if (DAC_value < 0) DAC_value = 0;
-			DAC->DHR12R1 = DAC_value;
+		//second AM audio filter section
+		tmp = module - (Z1_audio*a_AM_LPF[0] + Z2_audio*a_AM_LPF[1]);
+		module = tmp*b_AM_LPF[0] + Z1_audio*b_AM_LPF[1] + Z2_audio*b_AM_LPF[2];
+		Z2_audio = Z1_audio;
+		Z1_audio = tmp;
+
+
+		DAC_value = A_DAC_scale_AM*module*AM_AGC_sig + B_DAC_scale_AM;
+		//if (DAC_value > 4095) DAC_value = 4095; //it would be better with this limiter but it's not enough time to do that
+		if (DAC_value < 0) DAC_value = 0;
+		DAC->DHR12R1 = DAC_value;
 		break;
 
 	case OUT_IQ:

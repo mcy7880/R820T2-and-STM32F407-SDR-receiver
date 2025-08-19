@@ -15,3 +15,6 @@ Matlab's script and *.FDA files for Filter Designer (fdatool).
 STM32F407 - the whole project from STM32IDE
 
 Lots of detials (in Polish): https://www.elektroda.pl/rtvforum/topic4133002.html
+
+# Edit - 19-08-2025
+There was some issues with IIR audio filer (stability) for AM demodulator and some minor issues with UART console. I uploaded new version of the source code.

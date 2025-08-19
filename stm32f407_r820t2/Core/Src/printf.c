@@ -3,7 +3,7 @@
 #include "printf.h"
 #include "usart.h"
 
-char UART_printf_tmp_buf[100];
+char UART_printf_tmp_buf[150];
 
 void UART_printf(const char *format, ...)
 {
